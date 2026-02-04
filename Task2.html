@@ -1,0 +1,178 @@
+<html>
+
+<head>
+    <title>JavaScript String Functions</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+        }
+
+        .container {
+            width: 420px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        hr {
+            margin: 20px 0;
+        }
+
+        #output {
+            color: #333;
+            font-size: 14px;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>String Function Validation</h2>
+
+        <label>Username:</label>
+        <input type="text" id="username">
+
+        <label>Email:</label>
+        <input type="text" id="email">
+
+        <label>Password:</label>
+        <input type="password" id="password">
+
+        <label>Name:</label>
+        <input type="text" id="name">
+
+        <label>Sentence:</label>
+        <input type="text" id="sentence">
+
+        <label>Word to search:</label>
+        <input type="text" id="searchWord">
+
+        <label>Character to count:</label>
+        <input type="text" id="searchChar" maxlength="1">
+
+        <button onclick="validate()">Submit</button>
+
+        <hr>
+        <div id="output"></div>
+
+    </div>
+
+    <script>
+        function validate() {
+            let output = document.getElementById("output");
+            output.innerHTML = "";
+
+            let username = document.getElementById("username").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let name = document.getElementById("name").value;
+            let sentence = document.getElementById("sentence").value;
+            let word = document.getElementById("searchWord").value;
+            let ch = document.getElementById("searchChar").value;
+
+            let error = false;
+
+            if (!(username.length >= 6 && !username.includes(" "))) {
+                output.innerHTML += "<div class='error'>Username must be at least 6 characters and contain no spaces</div>";
+                error = true;
+            }
+
+            if (!email.endsWith(".edu")) {
+                output.innerHTML += "<div class='error'>Email must end with .edu</div>";
+                error = true;
+            }
+
+            let hasUppercase = password !== password.toLowerCase();
+            if (!(password.length >= 8 && hasUppercase)) {
+                output.innerHTML += "<div class='error'>Password must be minimum 8 characters with one uppercase letter</div>";
+                error = true;
+            }
+
+            let wordFound = sentence.includes(word);
+            if (!wordFound) {
+                output.innerHTML += "<div class='error'>Entered word not found in the sentence</div>";
+                error = true;
+            }
+
+            let charCount = 0;
+            for (let i = 0; i < sentence.length; i++) {
+                if (sentence.charAt(i) === ch) {
+                    charCount++;
+                }
+            }
+
+            if (!error) {
+                output.innerHTML += "<div class='success'>HELLO " + username.toUpperCase() + "</div>";
+                output.innerHTML += "<div class='success'>Number of characters in sentence: " + sentence.length + "</div>";
+                output.innerHTML += "<div class='success'>Character '" + ch + "' appears " + charCount + " times</div>";
+                output.innerHTML += "<div class='success'>Word '" + word + "' found in sentence</div>";
+            }
+
+            if (name === "Marie Curie") {
+                let parts = name.split(" ");
+                output.innerHTML +=
+                    "<div class='success'>Name Analysis → Initials: " +
+                    parts[0].charAt(0) + parts[1].charAt(0) +
+                    " | First & Last: " +
+                    parts[0].charAt(0) + parts[0].charAt(parts[0].length - 1) +
+                    ", " +
+                    parts[1].charAt(0) + parts[1].charAt(parts[1].length - 1) +
+                    "</div>";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
